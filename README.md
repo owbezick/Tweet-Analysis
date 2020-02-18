@@ -1,2 +1,5 @@
-# AnalyseTweets
-R file to analyze json file of scraped tweets
+# Twitter Scraping Projects
+## Table of Contents
+### Mariana Crespo's Senior Thesis
+### Emily Modlin's Senior Thesis
+
