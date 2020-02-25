@@ -1,0 +1,11 @@
+ReportingArea,TotalCases,ConfirmedCases,ProbableCases
+United States,"36,429","26,203","10,226"
+New England,"5,988","4,249","1,739"
+Middle Atlantic,"19,675","14,943","4,732"
+East North Central,"3,065","2,145",920
+West North Central,"2,464","1,424","1,040"
+South Atlantic,"4,736","3,197","1,539"
+East South Central,97,41,56
+West South Central,80,35,45
+Mountain,83,46,37
+Pacific,241,123,118
