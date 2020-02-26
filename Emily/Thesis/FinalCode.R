@@ -14,117 +14,114 @@ library(echarts4r)
 library(usmap)
 library(jsonlite)
 
+# Scraping Location Data ----
+  # For each yearly data frame, find the profile
+  # for each user that tweets and fine their location
 
-
-##################Get Location Data from Tweets#########################
-
-#For each data frame for each year, write code in R that 
-#goes to URL and collects location data that they wrote themselves. 
-
-
-#2016------------------------------------------------------------
+# 2016 ----
 df2016 <- read.csv("General2016.csv")
+df2016 <- df2016 %>%
+  select(`Tweet Number` = Tweet.Number, `Tweet Username` = Tweet.Username, `Tweet Text` = Tweet.Text
+         , `Tweet Date` = Tweet.Date, `Tweet Geo` = Tweet.Geo)
 
-df2016_location <- df2016 %>%
-  mutate(profile = paste("https://twitter.com/",`Tweet.Username`, sep=""))
+df2016_profle<- df2016 %>%
+  mutate(profile = paste("https://twitter.com/",`Tweet Username`, sep=""))
 
 d = list()
-for(i in 1:nrow(df)){
-  test <- read_html(df2016_location$profile[i]) %>%
+for(i in 1:nrow(df2016_profle)){
+  locations <- read_html(df2016_profle$profile[i]) %>%
     html_nodes("#page-container > div.AppContainer > div > div > div.Grid-cell.u-size1of3.u-lg-size1of4 > div > div > div > div.ProfileHeaderCard > div.ProfileHeaderCard-location > span.ProfileHeaderCard-locationText.u-dir") %>%
     html_text()
   
-  d[i] <- test
-  
+  d[i] <- locations
+  # print(i)
+  # print(d[i])
 }
 
-df2016_location$location <- unlist(do.call(rbind, d))
+df2016_profle$`Tweet Geo` <- unlist(do.call(rbind, d))
 
-
-#2017------------------------------------------------------------
+# 2017 ----
 
 df2017 <- read_csv("General2017.csv")
 
+df2017_profile <- df2017 %>%
+  mutate(profile = paste("https://twitter.com/",`Tweet Username`, sep=""))
 
-df2017_location <- df2017 %>%
-  mutate(profile = paste("https://twitter.com/",`Tweet.Username`, sep=""))
+df2017_profile <- df2017_profile[-c(75,76),] # remove user who deleted account
 
 d = list()
-for(i in 1:nrow(df)){
-  test <- read_html(df2017_location$profile[i]) %>%
+for(i in 1:nrow(df2017_profile)){
+  locations <- read_html(df2017_profile$profile[i]) %>%
     html_nodes("#page-container > div.AppContainer > div > div > div.Grid-cell.u-size1of3.u-lg-size1of4 > div > div > div > div.ProfileHeaderCard > div.ProfileHeaderCard-location > span.ProfileHeaderCard-locationText.u-dir") %>%
     html_text()
   
-  d[i] <- test
-  
+  d[i] <- locations
+  # print(i)
+  # print(d[i])
 }
 
-df2017_location$location <- unlist(do.call(rbind, d))
+df2017_profile$`Tweet Geo` <- unlist(do.call(rbind, d))
 
-
-#2018------------------------------------------------------------
+# 2018 ----
 
 df2018 <- read_csv("General2018.csv")
 
-
-df2018_location <- df2018 %>%
-  mutate(profile = paste("https://twitter.com/",`Tweet.Username`, sep=""))
-
+df2018_profile <- df2018 %>%
+  mutate(profile = paste("https://twitter.com/",`Tweet Username`, sep=""))
+df2018_profile <- df2018_profile[-c(47),]
 d = list()
-for(i in 1:nrow(df)){
-  test <- read_html(df2018_location$profile[i]) %>%
+for(i in 1:nrow(df2018_profile)){
+  locations <- read_html(df2018_profile$profile[i]) %>%
     html_nodes("#page-container > div.AppContainer > div > div > div.Grid-cell.u-size1of3.u-lg-size1of4 > div > div > div > div.ProfileHeaderCard > div.ProfileHeaderCard-location > span.ProfileHeaderCard-locationText.u-dir") %>%
     html_text()
   
-  d[i] <- test
-  
+  d[i] <- locations
+  # print(i)
+  # print(d[i])
 }
 
-df2018_location$location <- unlist(do.call(rbind, d))
+df2018_profile$`Tweet Geo` <- unlist(do.call(rbind, d))
 
-
-#2019------------------------------------------------------------
+# 2019 ----
 
 df2019 <- read_csv("General2019.csv")
 
+df2019_profile <- df2019 %>%
+  mutate(profile = paste("https://twitter.com/",`Tweet Username`, sep=""))
 
-df2019_location <- df2019 %>%
-  mutate(profile = paste("https://twitter.com/",`Tweet.Username`, sep=""))
-
+df2019_profile <- df2019_profile[-c(65),]
+df2019_profile <- df2019_profile[-c(178),]
 d = list()
-for(i in 1:nrow(df)){
-  test <- read_html(df2019_location$profile[i]) %>%
+for(i in 1:nrow(df2019_profile)){
+  location <- read_html(df2019_profile$profile[i]) %>%
     html_nodes("#page-container > div.AppContainer > div > div > div.Grid-cell.u-size1of3.u-lg-size1of4 > div > div > div > div.ProfileHeaderCard > div.ProfileHeaderCard-location > span.ProfileHeaderCard-locationText.u-dir") %>%
     html_text()
   
-  d[i] <- test
-  
+  d[i] <- location
+  print(i)
+  print(d[i])
 }
 
-df2019_location$location <- unlist(do.call(rbind, d))
+df2019_profile$`Tweet Geo` <- unlist(do.call(rbind, d))
 
-
-####Connect data frames to make one big dataframe
-
+# Standardize and Row Bind Data Frames ----
 full_df <- df2016_location %>%
   rbind(df2017_location) %>%
   rbind(df2018_location) %>%
   rbind(df2019_location)
 
-####Get rid of emojis in locations
+# Remove non-character strings  ----
 full_df$location <- gsub("➡️", "", full_df$location)
 
 full_df$location <- gsub("ÜT:", "", full_df$location)
 
 full_df$location <- gsub("👎🏼", "", full_df$location)
 
-####Get rid of html code
 full_df$location <- str_replace_all(full_df$location, "\n", "")
 
-####Get rid of white space
 full_df$location <- str_trim(full_df$location, side = "both")
 
-####Check to see if things are working
+# Check
 location_list <- full_df %>%
   count(location)
 
