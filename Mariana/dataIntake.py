@@ -9,8 +9,10 @@ Created on Sun Feb 23 18:11:12 2020
 import os
 
 # Twitter scraper query
-query = 'test'
+query = 'twitterscraper "Pepsi AND Kendall Jenner" -bd 2017-03-14 -ed 2017-05-14 -o test.JSON'
 
-# Result (JSON)
-result = os.popen(query)
+# Run query
+os.system(query)
+
+
 
