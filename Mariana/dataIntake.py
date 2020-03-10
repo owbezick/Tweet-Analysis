@@ -5,20 +5,12 @@ Created on Sun Feb 23 18:11:12 2020
 
 @author: owenbezick
 """
+# Lets you use shell within python
+import os
 
-# List of search terms
-ls_searchTerms = ["Pepsi AND Kendall", "Pepsi AND Black Lives Matter", "Pepsi AND BLM", "Kendall Jenner AND Black Lives Matter"]
+# Twitter scraper query
+query = 'test'
 
-# List  of start dates (YMD)
-ls_startDates = ["2017-03-14","2017-03-12"]
+# Result (JSON)
+result = os.popen(query)
 
-# List  of end dates (YMD)
-ls_endDates = ["2017-03-11","2017-03-19"]
-
-# Dictionary of command line calls
-dict_commandLineCalls = {}
-
-# Populate dictionary of command line calls
-
-for term in ls_pepsiSearchTerms:
-    dict_commandLineCalls[term] = "twitterscraper" + term + "-bd" + 
