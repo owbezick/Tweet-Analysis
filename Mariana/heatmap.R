@@ -25,4 +25,4 @@ calendar_heatmap <- function(json_str){
     e_title("Calendar", "Test")
 }
 
-blackLivesMatterNikeHeatmap <- calendar_heatmap("blackLivesMatterNikeAugust.json")
+blackLivesMatterNikeHeatmap <- calendar_heatmap("blackLivesMatterNike.json")
