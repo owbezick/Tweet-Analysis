@@ -2,7 +2,7 @@
 ## Twitter Scraping Techniques
  * [Get Old Tweets](https://github.com/Jefferson-Henrique/GetOldTweets-python)
  * [TwitterScraper](https://github.com/taspinar/twitterscraper)
-      - [CoLab Tutorial](https://colab.research.google.com/drive/1Cr3elAIN9mhAsGZisgkIYoA_b8nVR6A2)
+      - [Self-Written CoLab Tutorial](https://colab.research.google.com/drive/1Cr3elAIN9mhAsGZisgkIYoA_b8nVR6A2)
 ## Table of Contents
 ### Templates
 - dataintake.py
