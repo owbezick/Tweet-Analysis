@@ -12,3 +12,7 @@ Analysis of tweets before and after advertisements that have incited social chan
 Analysis of tweets focusing on the prevalance of Lyme Disease.
  - Check out the visual's folder HTML code for the final results!
 
+### Daniel Bunson's Senior Thesis
+Analysis of tweets focusing Proffesional Athlete's Community Engagement
+ - [RStudio Cloud Project](https://rstudio.cloud/project/1092458)
+
