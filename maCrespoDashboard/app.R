@@ -82,7 +82,7 @@ server <- function(input, output) {
     })
     
     output$colinKaepernickTimeSeries <- renderEcharts4r({
-        timeSeries(dreamCrazycolinKapepernick_p, "Colin Kaepernick")
+        timeSeries(dreamCrazyColinKapepernick_p, "Colin Kaepernick")
     })
     
     output$blmTimeSeries <- renderEcharts4r({
@@ -90,7 +90,7 @@ server <- function(input, output) {
     })
     
     output$dreamCrazyTimeSeries <- renderEcharts4r({
-        timeSeries(dreamCrazydreamCrazy_p, "Dream Crazy")
+        timeSeries(dreamCrazyDreamCrazy_p, "Dream Crazy")
     })
 }
 
