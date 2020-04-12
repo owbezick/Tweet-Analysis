@@ -31,13 +31,29 @@ ui <- dashboardPage(
         )
     )
     # Body ----
-    , dashboardBody( 
-        tabItems(
+    , dashboardBody(
+    tags$head(tags$style("#purpose{
+                                 font-size: 18px;
+                                 }"))
+    , tags$head(tags$style("#data{
+                                 font-size: 18px;
+                                 }"))
+    , tags$head(tags$style("#nrc{
+                                 font-size: 18px;
+                                 }"))
+    , tags$head(tags$style(HTML(".box-header .box-title{
+                                 font-size: 23px;
+                                 }")))
+    , tags$head(tags$style(HTML(".shiny-html-output{
+                                 font-size: 20px;
+                                 font-style: italic;
+                                 }")))
+        , tabItems(
             # Info UI ----
-            tabItem(
+             tabItem(
                 tabName = "home"
                 ,fluidRow(
-                    box(width = 12, title = "Information on Purpose"
+                    box(width = 12, title = "Purpose"
                         , textOutput("purpose")
                     )
                 )
@@ -335,11 +351,11 @@ server <- function(input, output) {
     
     url1 <- a("Google CoLab Notebook", href="https://colab.research.google.com/drive/1I3g-ZVrYCXkyK5VcVZ6Ujf-7_rz-7SJy")
     output$colabLink <- renderUI({
-        tagList("URL link:", url1)
+        tagList("", url1)
     })    
     url2 <- a("Syuzhet Package", href="https://cran.r-project.org/web/packages/syuzhet/vignettes/syuzhet-vignette.html")
     output$syuzhetLink <- renderUI({
-        tagList("URL link:", url2)
+        tagList("", url2)
     })
     
     output$nrc <- renderText("The sentiment analysis was conducted using the NRC sentiment library from the syuzhet R package.")
