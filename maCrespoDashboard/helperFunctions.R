@@ -31,7 +31,7 @@ getTweetSentiment <- function(df) {
   sentimet_tweet_df <- merge(tweet_id_and_sentiment, df, by ="tweet_id")
 }
 
-timeSeries <- function(df, title){
+timeSeries <- function(df, title, date){
   df <- df %>%
     group_by(timestamp) %>%
     summarise(positive = sum(positive)
@@ -41,8 +41,59 @@ timeSeries <- function(df, title){
     e_line(positive) %>%
     e_line(negative) %>%
     e_title(title) %>%
+    e_mark_line(data = list(xAxis = as.Date(date)), title = "Release Date") %>% 
     e_tooltip(trigger = c("axis"))
 }
+
+# Emotion Dataframes
+get_anger <- function(df){
+  df %>%
+    filter(anger > 0)
+}
+
+get_disgust <- function(df) {
+  df %>%
+    filter(disgust > 0)
+}
+
+get_fear <- function(df){
+  df %>%
+    filter(fear > 0)
+}
+
+get_sadness <- function(df){
+  df %>%
+    filter(sadness > 0)
+}
+
+get_anticipation <- function(df){
+  df %>%
+    filter(anticipation > 0)
+}
+
+get_joy <- function(df) {
+  df %>%
+    filter(joy > 0)
+}
+
+get_surprise <- function(df) {
+  df %>%
+    filter(surprise > 0)
+}
+
+get_trust <- function(df) {
+  df %>%
+    filter(trust > 0)
+}
+# Top n retweets ----
+top_n_retweets <- function(df,n){
+  df %>%
+    arrange(desc(retweets)) %>%
+    select(tweet_id, user_id, retweets, text) %>%
+    filter(retweets >0) %>%
+    head(n=n)
+}
+
 #++++++++++++++++++++++++++++++++++
 # rquery.wordcloud() : Word cloud generator
 # - http://www.sthda.com
