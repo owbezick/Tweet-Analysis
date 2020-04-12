@@ -181,6 +181,12 @@ ui <- dashboardPage(
                              ,tabPanel(title = "Nike & Black Lives Matter"
                                        , echarts4rOutput("nikeBLMTimeSeries")
                              )
+                             ,tabPanel(title = "Nike & Dream Crazy"
+                                       , echarts4rOutput("dreamCrazyNikeTimeSeries")
+                             )
+                             ,tabPanel(title = "Dream Crazy & Colin Kaepernick"
+                                       , echarts4rOutput("dreamCrazyKaepTimeSeries")
+                             )
                     )
                 )
             )
@@ -356,6 +362,8 @@ server <- function(input, output) {
             filter(timestamp >= as.Date("2018-09-03"))
         timeSeries(df, "Dream Crazy", "2018-09-03")
     })
+    
+
     # Combined
     output$nikeColinKaepernickTimeSeries <- renderEcharts4r({
         timeSeries(nikeColinKaepernick, "Nike & Colin Kaepernick", "2018-09-03")
@@ -366,6 +374,17 @@ server <- function(input, output) {
     
     output$nikeBLMTimeSeries <- renderEcharts4r({
         timeSeries(nikeBLM, "Black Lives Matter & Nike", "2018-09-03")
+    })
+    output$dreamCrazyNikeTimeSeries <- renderEcharts4r({
+        df <- dreamCrazyNike %>%
+            filter(timestamp >= as.Date("2018-09-03"))
+        timeSeries(df, "Dream Crazy & Nike", "2018-09-03")
+    })
+    
+    output$dreamCrazyKaepTimeSeries <- renderEcharts4r({
+        df <- dreamCrazyKaep %>%
+            filter(timestamp >= as.Date("2018-09-03"))
+        timeSeries(df, "Dream Crazy & Colin Kaepernick", "2018-09-03")
     })
     # Thematic Analysis
     # Anger

@@ -38,9 +38,10 @@ timeSeries <- function(df, title, date){
               , negative = sum(negative)) 
   df %>%
     e_chart(timestamp) %>%
-    e_line(positive, color = "green") %>%
+    e_line(positive, color = "blue") %>%
     e_line(negative, color = "red") %>%
     e_title(title) %>%
+    e_theme("westeros") %>%
     e_axis_labels(x = "Date", y = "Number of Tweets") %>%
     e_mark_line(data = list(xAxis = as.Date(date)), title = "Release Date") %>% 
     e_tooltip(trigger = c("axis"))
@@ -107,16 +108,16 @@ top_n_retweets <- function(df,n){
 sentimentBar <- function(df, title){
   df %>%
     e_chart(chart) %>%
-    e_bar("anger", name = "Anger") %>%
-    e_bar("disgust", name = "Disgust") %>%
-    e_bar("fear", name = "Fear") %>%
-    e_bar("sadness", name = "Sadness") %>%
-    e_bar("anticipation", name= "Anticipation") %>%
-    e_bar("joy", name = "Joy") %>%
-    e_bar("surprise", name = "Surprise") %>%
-    e_bar("trust", name = "Trust") %>%
-    e_bar("negative", name = "Negative") %>%
-    e_bar("positive", name = "Positive") %>%
+    e_bar("negative", name = "Negative", color = "#a50026") %>%
+    e_bar("anger", name = "Anger", color = "#d73027") %>%
+    e_bar("disgust", name = "Disgust", color = "#f46d43") %>%
+    e_bar("fear", name = "Fear", color = "#fdae61") %>%
+    e_bar("sadness", name = "Sadness", color = "#fee090") %>%
+    e_bar("anticipation", name= "Anticipation", color = "#e0f3f8") %>%
+    e_bar("joy", name = "Joy", color = "#abd9e9") %>%
+    e_bar("surprise", name = "Surprise", color = "#74add1") %>%
+    e_bar("trust", name = "Trust", color = "#4575b4") %>%
+    e_bar("positive", name = "Positive", color = "#313695") %>%
     e_axis_labels(x = "Emotion", y = "Number of Tweets") %>%
     e_title(title) %>%
     e_legend(bottom = 0) %>%
