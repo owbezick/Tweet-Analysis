@@ -4,6 +4,7 @@
 library(shiny)
 library(shinydashboard)
 library(shinyWidgets)
+library(shinythemes)
 
 # Data
 library(DT)

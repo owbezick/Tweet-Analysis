@@ -38,9 +38,10 @@ timeSeries <- function(df, title, date){
               , negative = sum(negative)) 
   df %>%
     e_chart(timestamp) %>%
-    e_line(positive) %>%
-    e_line(negative) %>%
+    e_line(positive, color = "green") %>%
+    e_line(negative, color = "red") %>%
     e_title(title) %>%
+    e_axis_labels(x = "Date", y = "Number of Tweets") %>%
     e_mark_line(data = list(xAxis = as.Date(date)), title = "Release Date") %>% 
     e_tooltip(trigger = c("axis"))
 }
@@ -85,6 +86,16 @@ get_trust <- function(df) {
   df %>%
     filter(trust > 0)
 }
+
+get_positive <- function(df) {
+  df %>%
+    filter(positive > 0)
+}
+
+get_negative <- function(df) {
+  df %>%
+    filter(negative > 0)
+}
 # Top n retweets ----
 top_n_retweets <- function(df,n){
   df %>%
@@ -93,7 +104,24 @@ top_n_retweets <- function(df,n){
     filter(retweets >0) %>%
     head(n=n)
 }
-
+sentimentBar <- function(df, title){
+  df %>%
+    e_chart(chart) %>%
+    e_bar("anger", name = "Anger") %>%
+    e_bar("disgust", name = "Disgust") %>%
+    e_bar("fear", name = "Fear") %>%
+    e_bar("sadness", name = "Sadness") %>%
+    e_bar("anticipation", name= "Anticipation") %>%
+    e_bar("joy", name = "Joy") %>%
+    e_bar("surprise", name = "Surprise") %>%
+    e_bar("trust", name = "Trust") %>%
+    e_bar("negative", name = "Negative") %>%
+    e_bar("positive", name = "Positive") %>%
+    e_axis_labels(x = "Emotion", y = "Number of Tweets") %>%
+    e_title(title) %>%
+    e_legend(bottom = 0) %>%
+    e_tooltip()
+}
 #++++++++++++++++++++++++++++++++++
 # rquery.wordcloud() : Word cloud generator
 # - http://www.sthda.com
