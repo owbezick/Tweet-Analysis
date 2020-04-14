@@ -108,16 +108,16 @@ top_n_retweets <- function(df,n){
 sentimentBar <- function(df, title){
   df %>%
     e_chart(chart) %>%
-    e_bar("negative", name = "Negative", color = "#a50026") %>%
-    e_bar("anger", name = "Anger", color = "#d73027") %>%
-    e_bar("disgust", name = "Disgust", color = "#f46d43") %>%
-    e_bar("fear", name = "Fear", color = "#fdae61") %>%
-    e_bar("sadness", name = "Sadness", color = "#fee090") %>%
-    e_bar("anticipation", name= "Anticipation", color = "#e0f3f8") %>%
-    e_bar("joy", name = "Joy", color = "#abd9e9") %>%
-    e_bar("surprise", name = "Surprise", color = "#74add1") %>%
-    e_bar("trust", name = "Trust", color = "#4575b4") %>%
-    e_bar("positive", name = "Positive", color = "#313695") %>%
+    e_bar("negative", name = "Negative", color = "#543005") %>%
+    e_bar("anger", name = "Anger", color = "#8c510a") %>%
+    e_bar("disgust", name = "Disgust", color = "#bf812d") %>%
+    e_bar("fear", name = "Fear", color = "#dfc27d") %>%
+    e_bar("sadness", name = "Sadness", color = "#f6e8c3") %>%
+    e_bar("anticipation", name= "Anticipation", color = "#c7eae5") %>%
+    e_bar("joy", name = "Joy", color = "#80cdc1") %>%
+    e_bar("surprise", name = "Surprise", color = "#35978f") %>%
+    e_bar("trust", name = "Trust", color = "#01665e") %>%
+    e_bar("positive", name = "Positive", color = "#003c30") %>%
     e_axis_labels(x = "Emotion", y = "Number of Tweets") %>%
     e_title(title) %>%
     e_legend(bottom = 0) %>%

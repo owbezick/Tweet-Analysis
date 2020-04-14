@@ -5,8 +5,8 @@ account: owen-bezick
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2101667
-bundleId: 3004451
+bundleId: 3013560
 url: https://owen-bezick.shinyapps.io/AdCampaignTwitterAnalysis/
-when: 1586730607.75094
+when: 1586896927.71433
 asMultiple: FALSE
 asStatic: FALSE

@@ -12,7 +12,15 @@ nikeBLM <- readRDS("dreamCrazyData/combined/nikeBLM.rds")
 dreamCrazyKaep <- readRDS("dreamCrazyData/combined/dreamCrazyColinKaepernick.rds")
 dreamCrazyNike <- readRDS("dreamCrazyData/combined/dreamCrazyNike.rds")
 
-dreamCrazyCombinedQueries <- rbind(nikeColinKaepernick,ColinBLM) %>% rbind(nikeBLM) %>% rbind(dreamCrazyKaep) %>% rbind(dreamCrazyNike)
+dreamCrazyCombinedQueries <- rbind(nikeColinKaepernick,ColinBLM) %>%
+  rbind(nikeBLM) %>% 
+  rbind(dreamCrazyKaep) %>% 
+  rbind(dreamCrazyNike)
+
+dreamCrazyBaselineAndCombined <- rbind(dreamCrazyBlackLivesMatter_p,dreamCrazyNike_p )%>% 
+  rbind(dreamCrazyColinKapepernick_p) %>% 
+  rbind(dreamCrazyDreamCrazy_p) %>% 
+  rbind(dreamCrazyCombinedQueries)
 
 # Pepsi ----
 # Baseline
@@ -28,3 +36,8 @@ pepsiKendallJenner <- readRDS("liveForNowData/combined/pepsiKendallJennerComb.rd
 pepsiLiveForNow <- readRDS("liveForNowData/combined/pepsiLiveForNowComb.rds")
 
 liveForNowCombinedQueries <- rbind(kendallJennerBLM, liveForNowKendallJenner) %>% rbind(pepsiBLM) %>% rbind(pepsiKendallJenner) %>% rbind(pepsiLiveForNow)
+
+liveForNowBaselineAndCombined <- rbind(liveForNowPepsi_p, liveForNowBlackLivesMatter_p) %>%
+  rbind(liveForNow_p) %>%
+  rbind(liveForNowKendallJenner_p) %>%
+  rbind(liveForNowCombinedQueries)

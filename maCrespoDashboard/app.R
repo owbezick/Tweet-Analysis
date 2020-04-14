@@ -32,61 +32,70 @@ ui <- dashboardPage(
     )
     # Body ----
     , dashboardBody(
-    tags$head(tags$style("#purpose{
+        tags$head(tags$style("#purpose{
                                  font-size: 18px;
                                  }"))
-    , tags$head(tags$style("#data{
+        , tags$head(tags$style("#data{
                                  font-size: 18px;
                                  }"))
-    , tags$head(tags$style("#nrc{
+        , tags$head(tags$style("#nrc{
                                  font-size: 18px;
                                  }"))
-    , tags$head(tags$style(HTML(".box-header .box-title{
+        , tags$head(tags$style(HTML(".box-header .box-title{
                                  font-size: 23px;
                                  }")))
-    , tags$head(tags$style(HTML(".shiny-html-output{
+        , tags$head(tags$style(HTML(".shiny-html-output{
                                  font-size: 20px;
                                  font-style: italic;
                                  }")))
         , tabItems(
             # Info UI ----
-             tabItem(
+            tabItem(
                 tabName = "home"
                 ,fluidRow(
-                    box(width = 12, title = "Purpose"
+                    box(width = 6, title = "Purpose", status = "primary", height = "235"
                         , textOutput("purpose")
+                    )
+                    , box(width = 6, title = "Information on Data", status = "primary", height = "235"
+                        , column( width = 12
+                                  , textOutput("data")
+                                  , uiOutput("colabLink")
+                                  , textOutput('nrc')
+                                  , uiOutput("syuzhetLink")
+                        )
                     )
                 )
                 , fluidRow(
-                    box(
-                        width = 6, 
-                        title = "Live For Now Ad",
-                        HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/uwvAgDCOdU4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
+                    box(width = 6, height = '425', status = "primary"
+                        , title = "Live For Now Ad"
+                        , column(width = 6
+                                 , HTML('<iframe width="392" height="220.5" src="https://www.youtube.com/embed/uwvAgDCOdU4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
+                        )
+                        , column(width = 6
+                                 , div(img(src="pepsiWordCloud.png"), style = "text-align:center;")
+                        )
+                        , valueBoxOutput("liveForNowTotal", width = 12)
                     )
-                    ,  box(
-                        width = 6, 
-                        title = "Dream Crazy Ad", 
-                        HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/jBnseji3tBk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
+                    ,   box(width = 6, height = "425", status = "primary"
+                            , title = "Dream Crazy Ad"
+                            , column(width = 6
+                                     , HTML('<iframe width="392" height="220.5" src="https://www.youtube.com/embed/jBnseji3tBk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
+                            )
+                            , column(width = 6
+                                     , div(img(src="nikeWordCloud.png", height = "250", width = "250"), style = "text-align:center;")
+                            )
+                            , valueBoxOutput("dreamCrazyTotal", width = 12)
                     )
                 )
-                
-                , fluidRow(box(width = 12, title = "Information on Data"
-                               , fluidRow(column(width = 3
-                                                 , valueBoxOutput("liveForNowTotal", width = 12)
-                                                 ,img(src="pepsiWordCloud.png")
-                               )
-                               , column(width = 3
-                                        , valueBoxOutput("dreamCrazyTotal", width =12 )
-                                        ,img(src="nikeWordCloud.png")
-                               )
-                               , column(width = 6
-                                        , textOutput("data")
-                                        , uiOutput("colabLink")
-                                        , textOutput('nrc')
-                                        , uiOutput("syuzhetLink")
-                               )
-                               )
-                )
+                , fluidRow(
+                    box(width = 6, title = "Live For Now Data", status = "primary"
+                        , DTOutput("liveForNowData")
+                        , style = "height: calc(100vh - 260px) !important; overflow-y: scroll;overflow-x: scroll;"
+                    )
+                    ,  box(width = 6, title = "Dream Crazy Data", status = "primary"
+                           , DTOutput("dreamCrazyData")
+                           , style = "height: calc(100vh - 260px) !important; overflow-y: scroll;overflow-x: scroll;"
+                    )
                 )
             )
             # Nike Emotional Analysis UI ----
@@ -95,78 +104,17 @@ ui <- dashboardPage(
                 , fluidRow(box(width = 12, status = "primary", title = "Overall Emotion"
                                , echarts4rOutput("nikeSentiment_bar")
                 )
-                , tabBox(title = "Relevant Tweet Texts by Emotion", width = 12, side = "right"
-                         , tabPanel(title = "Anger"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazyAnger_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Anticipation"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazyAnticipation_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Disgust"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazyDisgust_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Fear"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazyFear_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Joy"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazyJoy_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Sadness"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazySadness_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Surprise"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazySurprise_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Trust"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazyTrust_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Positive"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazyPositive_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Negative"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("dreamCrazyNegative_DT")
-                                        )
-                                    )
-                         )
                 )
+                , fluidRow(
+                    box(width = 12, title = 'Data by Emotion', status = "primary"
+                        , radioGroupButtons(
+                            inputId = "nikeEmotion",
+                            label = "Emotion",
+                            choices = c('Neagtive', 'Anger', "Disgust", "Fear", "Sadness", "Anticipation", "Joy", "Surprise", "Trust", "Positive"),
+                            selected = 'Positive',
+                        )
+                        , DTOutput("nikeEmotionData")
+                    )
                 )
             )
             # NIke Time Series UI ----
@@ -209,81 +157,21 @@ ui <- dashboardPage(
             # Pepsi Emotional Analysis UI ----
             , tabItem(
                 tabName = "pepsiEmotionAnalysis"
-                , fluidRow(box(width = 12, status = "primary", title = "Overall Emotion"
-                               , echarts4rOutput("pepsiSentiment_bar")
+                , fluidRow(
+                    box(width = 12, status = "primary", title = "Overall Emotion"
+                        , echarts4rOutput("pepsiSentiment_bar")
+                    )
                 )
-                , tabBox(title = "Relevant Tweet Texts by Emotion", width = 12, side = "right"
-                         , tabPanel(title = "Anger"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowAnger_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Anticipation"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowAnticipation_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Disgust"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowDisgust_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Fear"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowFear_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Joy"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowJoy_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Sadness"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowSadness_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Surprise"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowSurprise_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Trust"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowTrust_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Positive"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowPositive_DT")
-                                        )
-                                    )
-                         )
-                         , tabPanel(title = "Negative"
-                                    , fluidRow(
-                                        box(width = 12, status = "primary"
-                                            , DTOutput("liveForNowNegative_DT")
-                                        )
-                                    )
-                         )
-                )
+                , fluidRow(
+                    box(width = 12, title = 'Data by Emotion', status = "primary"
+                        , radioGroupButtons(
+                            inputId = "pepsiEmotion",
+                            label = "Emotion",
+                            choices = c('Neagtive', 'Anger', "Disgust", "Fear", "Sadness", "Anticipation", "Joy", "Surprise", "Trust", "Positive"),
+                            selected = 'Positive',
+                        )
+                        , DTOutput("pepsiEmotionData")
+                    )
                 )
             )
             # Pepsi Time Series UI ----
@@ -359,6 +247,22 @@ server <- function(input, output) {
     })
     
     output$nrc <- renderText("The sentiment analysis was conducted using the NRC sentiment library from the syuzhet R package.")
+    
+    output$liveForNowData <- renderDT({
+        df <- liveForNowBaselineAndCombined
+        df <- df[order(df$retweets, decreasing = T),]
+        df <- df %>%
+            select(Retweets = retweets, Tweet = text)
+        datatable(df, rownames = FALSE, options = list(pageLength = 20, scrollY = "750"))
+    })
+    
+    output$dreamCrazyData <- renderDT({
+        df <- dreamCrazyBaselineAndCombined
+        df <- df[order(df$retweets, decreasing = T),]
+        df <- df %>%
+            select(Retweets = retweets, Tweet = text)
+        datatable(df, rownames = FALSE, options = list(pageLength = 20, scrollY = "750"))
+    })
     # NIKE ----
     # Time Series Graphics
     output$nikeTimeSeries <- renderEcharts4r({
@@ -379,7 +283,7 @@ server <- function(input, output) {
         timeSeries(df, "Dream Crazy", "2018-09-03")
     })
     
-
+    
     # Combined
     output$nikeColinKaepernickTimeSeries <- renderEcharts4r({
         timeSeries(nikeColinKaepernick, "Nike & Colin Kaepernick", "2018-09-03")
@@ -403,101 +307,7 @@ server <- function(input, output) {
         timeSeries(df, "Dream Crazy & Colin Kaepernick", "2018-09-03")
     })
     # Thematic Analysis
-    # Anger
-    dreamCrazy_anger <- get_anger(dreamCrazyCombinedQueries)
-    output$dreamCrazy_nAnger <- renderValueBox(valueBox(
-        nrow(dreamCrazy_anger)
-        , subtitle = "Tweets Tagged as 'Anger'"
-        , width = 12)
-    )
-    
-    output$dreamCrazyAnger_DT <- renderDT({
-        df <-dreamCrazy_anger
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(anger, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Anticipation
-    dreamCrazy_anticipation <- get_anticipation(dreamCrazyCombinedQueries)
-    output$dreamCrazyAnticipation_DT <- renderDT({
-        df <- dreamCrazy_anticipation
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(anticipation, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Disgust
-    dreamCrazy_disgust <- get_disgust(dreamCrazyCombinedQueries)
-    output$dreamCrazyDisgust_DT <- renderDT({
-        df <- dreamCrazy_disgust
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(disgust, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Fear
-    dreamCrazy_fear <- get_fear(dreamCrazyCombinedQueries)
-    output$dreamCrazyFear_DT <- renderDT({
-        df <- dreamCrazy_fear
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(fear, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Joy
-    dreamCrazy_joy <- get_joy(dreamCrazyCombinedQueries)
-    output$dreamCrazyJoy_DT <- renderDT({
-        df <- dreamCrazy_joy
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(joy, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Sadness
-    dreamCrazy_sadness <- get_sadness(dreamCrazyCombinedQueries)
-    output$dreamCrazySadness_DT <- renderDT({
-        df <- dreamCrazy_sadness
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(sadness, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Surprise
-    dreamCrazy_surprise <- get_surprise(dreamCrazyCombinedQueries)
-    output$dreamCrazySurprise_DT <- renderDT({
-        df <- dreamCrazy_surprise
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(surprise, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Trust
-    dreamCrazy_trust <- get_trust(dreamCrazyCombinedQueries)
-    output$dreamCrazyTrust_DT <- renderDT({
-        df <- dreamCrazy_trust
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(trust, retweets, text)
-        datatable(df, rownames = F)
-    })
-    # Positive
-    dreamCrazy_positive <- get_positive(dreamCrazyCombinedQueries)
-    output$dreamCrazyPositive_DT <- renderDT({
-        df <- dreamCrazy_positive
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(positive, retweets, text)
-        datatable(df, rownames = F)
-    })
-    # Negative
-    dreamCrazy_negative <- get_negative(dreamCrazyCombinedQueries)
-    output$dreamCrazyNegative_DT <- renderDT({
-        df <- dreamCrazy_negative
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(negative, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Bar Chart with sentiment
+    # Bar Chart 
     output$nikeSentiment_bar <- renderEcharts4r({
         dreamCrazyBar_df <- dreamCrazyCombinedQueries %>%
             summarise(anger = sum(anger)
@@ -513,6 +323,85 @@ server <- function(input, output) {
             mutate(chart = "")
         sentimentBar(dreamCrazyBar_df, "Dream Crazy Sentiment")
     })
+    
+    # Data Table
+    output$nikeEmotionData <- renderDT({
+        req(input$nikeEmotion)
+        #Anger
+        if(input$nikeEmotion == 'Anger'){
+            dreamCrazy_anger <- get_anger(dreamCrazyCombinedQueries)
+            df <-dreamCrazy_anger
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(anger, retweets, text)
+            
+            return(datatable(df, rownames = F))
+        }
+        # Disgust
+        if(input$nikeEmotion == 'Disgust'){
+            dreamCrazy_disgust <- get_disgust(dreamCrazyCombinedQueries)
+            df <- dreamCrazy_disgust
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(disgust, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Fear
+        if(input$nikeEmotion == 'Fear'){
+            dreamCrazy_fear <- get_fear(dreamCrazyCombinedQueries)
+            df <- dreamCrazy_fear
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(fear, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Sadness
+        if(input$nikeEmotion == 'Sadness'){
+            dreamCrazy_sadness <- get_sadness(dreamCrazyCombinedQueries)
+            df <- dreamCrazy_sadness
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(sadness, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Anticipation
+        if(input$nikeEmotion == 'Anticipation'){
+            dreamCrazy_anticipation <- get_anticipation(dreamCrazyCombinedQueries)
+            df <- dreamCrazy_anticipation
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(anticipation, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Joy
+        if(input$nikeEmotion == 'Joy'){
+            dreamCrazy_joy <- get_joy(dreamCrazyCombinedQueries)
+            df <- dreamCrazy_joy
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(joy, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Surprise
+        if(input$nikeEmotion == 'Surprise'){
+            dreamCrazy_surprise <- get_surprise(dreamCrazyCombinedQueries)
+            df <- dreamCrazy_surprise
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(surprise, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Surprise
+        if(input$nikeEmotion == 'Trust'){
+            dreamCrazy_trust <- get_trust(dreamCrazyCombinedQueries)
+            df <- dreamCrazy_trust
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(trust, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Positive
+        if(input$nikeEmotion == 'Positive'){
+            dreamCrazy_positive <- get_positive(dreamCrazyCombinedQueries)
+            df <- dreamCrazy_positive
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(positive, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+    })
+    
     
     #PEPSI----
     # Time Series Graphics
@@ -551,99 +440,6 @@ server <- function(input, output) {
     })
     
     # Thematic Analysis
-    # Anger
-    liveForNow_anger <- get_anger(liveForNowCombinedQueries)
-    output$liveForNow_nAnger <- renderValueBox(valueBox(
-        nrow(liveForNow_anger)
-        , subtitle = "Tweets Tagged as 'Anger'"
-        , width = 12)
-    )
-    
-    output$liveForNowAnger_DT <- renderDT({
-        df <-liveForNow_anger
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(anger, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Anticipation
-    liveForNow_anticipation <- get_anticipation(liveForNowCombinedQueries)
-    output$liveForNowAnticipation_DT <- renderDT({
-        df <- liveForNow_anticipation
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(anticipation, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Disgust
-    liveForNow_disgust <- get_disgust(liveForNowCombinedQueries)
-    output$liveForNowDisgust_DT <- renderDT({
-        df <- liveForNow_disgust
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(disgust, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Fear
-    liveForNow_fear <- get_fear(liveForNowCombinedQueries)
-    output$liveForNowFear_DT <- renderDT({
-        df <- liveForNow_fear
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(fear, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Joy
-    liveForNow_joy <- get_joy(liveForNowCombinedQueries)
-    output$liveForNowJoy_DT <- renderDT({
-        df <- liveForNow_joy
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(joy, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Sadness
-    liveForNow_sadness <- get_sadness(liveForNowCombinedQueries)
-    output$liveForNowSadness_DT <- renderDT({
-        df <- liveForNow_sadness
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(sadness, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Surprise
-    liveForNow_surprise <- get_surprise(liveForNowCombinedQueries)
-    output$liveForNowSurprise_DT <- renderDT({
-        df <- liveForNow_surprise
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(surprise, retweets, text)
-        datatable(df, rownames = F)
-    })
-    
-    # Trust
-    liveForNow_trust <- get_trust(liveForNowCombinedQueries)
-    output$liveForNowTrust_DT <- renderDT({
-        df <- liveForNow_trust
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(trust, retweets, text)
-        datatable(df, rownames = F)
-    })
-    # Positive
-    liveForNow_positive <- get_positive(liveForNowCombinedQueries)
-    output$liveForNowPositive_DT <- renderDT({
-        df <- liveForNow_positive
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(positive, retweets, text)
-        datatable(df, rownames = F)
-    })
-    # Negative
-    liveForNow_negative <- get_negative(liveForNowCombinedQueries)
-    output$liveForNowNegative_DT <- renderDT({
-        df <- liveForNow_negative
-        df <- df[order(df$retweets, decreasing = T),]
-        df <- df %>% select(negative, retweets, text)
-        datatable(df, rownames = F)
-    })
     # Bar Chart with sentiment
     output$pepsiSentiment_bar <- renderEcharts4r({
         pepsiBar_df <- liveForNowCombinedQueries %>%
@@ -659,6 +455,84 @@ server <- function(input, output) {
                       , positive = sum(positive)) %>%
             mutate(chart = "")
         sentimentBar(pepsiBar_df, "Live For Now Sentiment")
+    })
+    
+    # Data Table
+    output$pepsiEmotionData <- renderDT({
+        req(input$pepsiEmotion)
+        #Anger
+        if(input$pepsiEmotion == 'Anger'){
+            liveForNow_anger <- get_anger(liveForNowCombinedQueries)
+            df <-liveForNow_anger
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(anger, retweets, text)
+            
+            return(datatable(df, rownames = F))
+        }
+        # Disgust
+        if(input$pepsiEmotion == 'Disgust'){
+            liveForNow_disgust <- get_disgust(liveForNowCombinedQueries)
+            df <- liveForNow_disgust
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(disgust, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Fear
+        if(input$pepsiEmotion == 'Fear'){
+            liveForNow_fear <- get_fear(liveForNowCombinedQueries)
+            df <- liveForNow_fear
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(fear, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Sadness
+        if(input$pepsiEmotion == 'Sadness'){
+            liveForNow_sadness <- get_sadness(liveForNowCombinedQueries)
+            df <- liveForNow_sadness
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(sadness, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Anticipation
+        if(input$pepsiEmotion == 'Anticipation'){
+            liveForNow_anticipation <- get_anticipation(liveForNowCombinedQueries)
+            df <- liveForNow_anticipation
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(anticipation, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Joy
+        if(input$pepsiEmotion == 'Joy'){
+            liveForNow_joy <- get_joy(liveForNowCombinedQueries)
+            df <- liveForNow_joy
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(joy, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Surprise
+        if(input$pepsiEmotion == 'Surprise'){
+            liveForNow_surprise <- get_surprise(liveForNowCombinedQueries)
+            df <- liveForNow_surprise
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(surprise, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Trust
+        if(input$pepsiEmotion == 'Trust'){
+            liveForNow_trust <- get_trust(liveForNowCombinedQueries)
+            df <- liveForNow_trust
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(trust, retweets, text)
+            return(datatable(df, rownames = F))
+        }
+        # Positive
+        if(input$pepsiEmotion == 'Positive'){
+            liveForNow_positive <- get_positive(liveForNowCombinedQueries)
+            df <- liveForNow_positive
+            df <- df[order(df$retweets, decreasing = T),]
+            df <- df %>% select(positive, retweets, text)
+            return(datatable(df, rownames = F))
+        }
     })
 }
 
