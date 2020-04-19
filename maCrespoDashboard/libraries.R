@@ -13,6 +13,7 @@ library(lubridate)
 library(openxlsx)
 library(tidyverse)
 library(readxl)
+library(scales)
 
 # Viz
 library(echarts4r)
