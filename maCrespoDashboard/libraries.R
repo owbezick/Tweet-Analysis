@@ -4,6 +4,7 @@
 library(shiny)
 library(shinydashboard)
 library(shinyWidgets)
+library(shinythemes)
 
 # Data
 library(DT)
@@ -12,6 +13,7 @@ library(lubridate)
 library(openxlsx)
 library(tidyverse)
 library(readxl)
+library(scales)
 
 # Viz
 library(echarts4r)
